@@ -1,0 +1,11 @@
+{
+  "name": "linkedin-poster",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "post": "node post.js"
+  },
+  "dependencies": {
+    "playwright": "^1.46.0"
+  }
+}
