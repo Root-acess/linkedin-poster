@@ -1,0 +1,31 @@
+name: Scheduled LinkedIn Post
+
+on:
+  schedule:
+    # Runs every day at 04:00 UTC (≈ 9:30 AM IST)
+    - cron: "0 4 * * *"
+  workflow_dispatch: {} # allows manual trigger
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Post to LinkedIn
+        env:
+          LINKEDIN_EMAIL: ${{ secrets.LINKEDIN_EMAIL }}
+          LINKEDIN_PASSWORD: ${{ secrets.LINKEDIN_PASSWORD }}
+        run: |
+          echo "🚀 Running LinkedIn poster..."
+          npx playwright install chromium
+          npm run post
