@@ -1,10 +1,10 @@
+# .github/workflows/schedule.yml
 name: Scheduled LinkedIn Post
 
 on:
   schedule:
-    # Runs every day at 04:00 UTC (≈ 9:30 AM IST)
     - cron: "0 4 * * *"
-  workflow_dispatch: {} # allows manual trigger
+  workflow_dispatch: {}
 
 jobs:
   post:
@@ -29,3 +29,11 @@ jobs:
           echo "🚀 Running LinkedIn poster..."
           npx playwright install chromium
           npm run post
+
+      - name: Upload screenshots (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-screens
+          path: artifacts/*.png
+          if-no-files-found: ignore
